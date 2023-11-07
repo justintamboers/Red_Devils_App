@@ -13,8 +13,8 @@
         <Label x:Name="PositionLabel" Text="{Binding SelectedPlayer.Number, Converter={StaticResource PositionConverter}, StringFormat='Position: {0}'}"/>
         <DatePicker x:Name="BirthDateLabel" Date="{Binding SelectedPlayer.BirthDate}" Format="dd/MM/yyyy" />
         <Label x:Name="AgeLabel"  Text="{Binding SelectedPlayer.BirthDate, Converter={StaticResource AgeConverter}, StringFormat='Leeftijd: {0}'}"/>
-        <Image
-            x:Name="PlayerImage" Source="{Binding SelectedPlayer.ImageUrl, TargetNullValue={StaticResource  }}"></Image>
+        <!--<Image
+            x:Name="PlayerImage" Source="{Binding SelectedPlayer.ImageUrl, TargetNullValue={StaticResource  }}"></Image>-->
         <Button x:Name="UpdatePlayerButton" Text="Update" Command="{Binding UpdateCommand}"></Button>
     </VerticalStackLayout>
 </ContentPage>

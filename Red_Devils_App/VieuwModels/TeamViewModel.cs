@@ -21,9 +21,10 @@ namespace Red_Devils_App.VieuwModels
         private readonly IDialogService dialog;
 
 
-        public TeamViewModel(IPlayerRepo repo)
+        public TeamViewModel(IPlayerRepo repo, INavigationService navigation)
         {
             this.repo = repo;
+            this.navigation = navigation;
 
             players = new ObservableCollection<Player>(repo.GetPlayers());
         }

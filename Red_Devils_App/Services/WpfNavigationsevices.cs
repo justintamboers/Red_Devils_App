@@ -8,5 +8,9 @@ namespace Red_Devils_App.Services
 {
     public class WpfNavigationsevices : INavigationService
     {
+        public Task NavigateToAsync(string route, IDictionary<string, object> routeParameters = null)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

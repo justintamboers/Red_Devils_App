@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace Red_Devils_App.Services
 {
-    class MauiDialogServices : IDialogService
+    public class MauiDialogServices : IDialogService
     {
-        public async Task ShowTaost(string message, int fontSize)
+        public Task ShowTaost(string message, int fontSize)
         {
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
 
@@ -18,7 +18,7 @@ namespace Red_Devils_App.Services
 
             var toast = Toast.Make(message, duration, fontSize);
 
-             await toast.Show(cancellationTokenSource.Token);
+             return toast.Show(cancellationTokenSource.Token);
         }
     }
 }

@@ -11,15 +11,7 @@ namespace Red_Devils_App.Services
 {
     public interface IDialogService
     {
-        public async Task ShowTaost(string message, int fontSize)
-        {
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+        Task ShowTaost(string message, int fontSize);
 
-            ToastDuration duration = ToastDuration.Short;
-
-            var toast = Toast.Make(message, duration, fontSize);
-
-            await toast.Show(cancellationTokenSource.Token);
-        }
     }
 }

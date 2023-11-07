@@ -7,7 +7,8 @@ using Red_Devils_App.VieuwModels;
 namespace Red_Devils_App.Vieuws
 {
     public partial class PlayerPage : ContentPage
-    {        public PlayerPage(PlayerViewModel vm)
+    {        
+        public PlayerPage(PlayerViewModel vm)
         {
             InitializeComponent();
             this.BindingContext = vm;

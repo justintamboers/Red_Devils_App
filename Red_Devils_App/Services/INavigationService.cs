@@ -6,19 +6,13 @@ using System.Threading.Tasks;
 
 namespace Red_Devils_App.Services
 {
-    interface INavigationService
+    public interface INavigationService
     {
-        public Task NavigateToAsync(string route, IDictionary<string, object> routeParameters = null)
-        {
-            return
-                routeParameters != null
-                ? Shell.Current.GoToAsync(route, routeParameters)
-                : Shell.Current.GoToAsync(route);
-        }
+        Task NavigateToAsync(string route, IDictionary<string, object> routeParameters = null);
 
-        public Task PopAsync()
-        {
-            throw new NotImplementedException();
-        }
+        //public Task PopAsync()
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }

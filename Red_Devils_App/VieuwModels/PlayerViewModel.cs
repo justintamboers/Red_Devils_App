@@ -41,7 +41,7 @@ namespace Red_Devils_App.VieuwModels
         [RelayCommand]
         public async Task OnUpdate()
         {
-            await playerRepo.UpdatePlayer(selectedPlayer);
+            await playerRepo.UpdatePlayer(SelectedPlayer);
         }
     }
 }

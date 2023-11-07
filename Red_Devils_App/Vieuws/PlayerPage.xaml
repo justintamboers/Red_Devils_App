@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Red_Devils_App.VieuwModels"
+             x:Class="Red_Devils_App.Vieuws.PlayerPage"
+             Title="PlayerPage"
+             x:DataType="vm:PlayerViewModel">
+    <VerticalStackLayout x:Name="PlayerStack">
+        <Entry 
+            x:Name="PlayerLabel" Text="{Binding SelectedPlayer.Name}"/>
+        <Picker 
+            x:Name="NumberLabel" SelectedItem="{Binding SelectedPlayer}"></Picker>
+        <Label x:Name="PositionLabel" Text="{Binding SelectedPlayer.Number, Converter={StaticResource PositionConverter}, StringFormat='Position: {0}'}"/>
+        <DatePicker x:Name="BirthDateLabel" Date="{Binding SelectedPlayer.BirthDate}" Format="dd/MM/yyyy" />
+        <Label x:Name="AgeLabel"  Text="{Binding SelectedPlayer.BirthDate, Converter={StaticResource AgeConverter}, StringFormat='Leeftijd: {0}'}"/>
+        <Image
+            x:Name="PlayerImage" Source="{Binding SelectedPlayer.ImageUrl, TargetNullValue={StaticResource  }}"></Image>
+        <Button x:Name="UpdatePlayerButton" Text="Update" Command="{Binding UpdateCommand}"></Button>
+    </VerticalStackLayout>
+</ContentPage>

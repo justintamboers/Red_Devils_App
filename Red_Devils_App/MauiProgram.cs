@@ -25,8 +25,14 @@ public static class MauiProgram
 		builder.Services.AddTransient<PlayerPage>();
 		builder.Services.AddTransient<TeamPage>();
 		builder.Services.AddTransient<PlayerViewModel>();
-		builder.Services.AddSingleton<INavigationService, MauiNavigationService>();
+
+        builder.Services.AddSingleton<LoginPage>();
+        builder.Services.AddSingleton<LoginViewModel>();
+
+        builder.Services.AddSingleton<INavigationService, MauiNavigationService>();
 		builder.Services.AddSingleton<IDialogService, MauiDialogServices>();
+		builder.Services.AddSingleton<ILocalStorageService, LocalStorageService>();
+
 #if DEBUG
 		builder.Logging.AddDebug();
 #endif

@@ -1,14 +1,16 @@
+using Red_Devils_App.VieuwModels;
+
 namespace Red_Devils_App.Vieuws;
 
 public partial class LoginPage : ContentPage
 {
-	public LoginPage()
-	{
-		InitializeComponent();
-	}
-
-    private async void LoginButton_Clicked(object sender, EventArgs e)
+    public LoginPage(LoginViewModel vm)
     {
-		await Shell.Current.GoToAsync("//MainPage");
+        InitializeComponent();
+        this.BindingContext = vm;
     }
+  //  private async void LoginButton_Clicked(object sender, EventArgs e)
+  //  {
+		//await Shell.Current.GoToAsync("//MainPage");
+  //  }
 }

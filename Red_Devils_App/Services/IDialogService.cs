@@ -11,7 +11,7 @@ namespace Red_Devils_App.Services
 {
     public interface IDialogService
     {
-        Task ShowTaost(string message, int fontSize);
+        Task ShowToast(string message, int fontSize = 14);
 
     }
 }

@@ -10,7 +10,7 @@ namespace Red_Devils_App.Services
 {
     public class MauiDialogServices : IDialogService
     {
-        public Task ShowTaost(string message, int fontSize)
+        public Task ShowToast(string message, int fontSize = 16)
         {
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
 

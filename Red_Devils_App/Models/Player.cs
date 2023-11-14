@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using SQLite;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,36 +11,69 @@ namespace Red_Devils_App.Models
 {
     public partial class Player : ObservableObject
     {
-        private const string IMG_URL = "https://belgianfootball.s3.eu-central-1.amazonaws.com/s3fs-public/rbfa/img/players/internationals/football/men/";
+        private const string IMAGE_URL = "https://belgianfootball.s3.eu-central-1.amazonaws.com/s3fs-public/rbfa/img/players/internationals/football/men/";
 
-        [ObservableProperty]
-        [NotifyPropertyChangedFor(nameof(ImageUrl))]
         private int id;
+        [PrimaryKey]
+        [AutoIncrement]
+        public int Id
+        {
+            get { return id; }
+            set { SetProperty(ref id, value); }
+         }
 
-        [ObservableProperty]
-        private string name;
-
-        [ObservableProperty]
-        private int number;
-
-        [ObservableProperty]
-        private DateTime birthDate;
-
+        private int externalId;
+        [Unique]
+        public int ExternalID
+        {
+            get { return externalId; }
+            set
+            {
+                if (SetProperty(ref externalId, value))
+                {
+                    OnPropertyChanged(nameof(ImageUrl));
+                } }
+        }
+        [Ignore]
         public string ImageUrl
         {
             get
             {
-                if (id == 0 || id == null)
+                if (ExternalID == 0 || ExternalID == null)
                 {
                     return null;
                 }
                 else
                 {
-                    return IMG_URL + id + ".jpg";
+                    return IMAGE_URL + ExternalID + ".jpg";
                 }
             }
 
         }
+
+        private string name;
+        [MaxLength(100)]
+        public string Name
+        {
+            get { return name; }
+            set { SetProperty(ref name, value); }
+        }
+
+        private int number;
+        [Unique]
+        public int Number
+        {
+            get { return number; }
+            set { SetProperty(ref number, value); }
+        }
+
+        private DateTime birthDate;
+        public DateTime BirthDate
+        {
+            get { return birthDate; }
+            set { SetProperty(ref birthDate, value); }
+        }
+
         //    public int Id { get => id;
         //        set
         //        {

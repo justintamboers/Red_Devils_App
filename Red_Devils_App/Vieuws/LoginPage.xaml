@@ -24,9 +24,9 @@
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Label Style="{StaticResource whitetekst}" Text="enter username" Grid.Row="0"></Label>
-            <Entry x:Name="UsernameEntry" ></Entry>
+            <Entry x:Name="UsernameEntry" Text="{Binding UserName}"></Entry>
             <Label Style="{StaticResource whitetekst}" Text="enter password" Grid.Row="1"></Label>
-            <Entry x:Name="PasswordEntry" IsPassword="True" Grid.Row="1"></Entry>
+            <Entry x:Name="PasswordEntry" IsPassword="True" Grid.Row="1" Text="{Binding Password}"></Entry>
             <Label Grid.Column="1">Remember me</Label>
             <CheckBox IsChecked="{Binding RememberLogin}" Grid.Column="1" Grid.Row="1"></CheckBox>
             <Button Grid.Row="2" 

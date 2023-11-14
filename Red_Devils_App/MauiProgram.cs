@@ -4,6 +4,7 @@ using Red_Devils_App.Repository;
 using Red_Devils_App.Services;
 using Red_Devils_App.VieuwModels;
 using Red_Devils_App.Vieuws;
+using SQLite;
 
 namespace Red_Devils_App;
 
@@ -21,7 +22,6 @@ public static class MauiProgram
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
 			});
 		builder.Services.AddSingleton<TeamViewModel>();
-		builder.Services.AddSingleton<IPlayerRepo, PlayerFakeRepo>();
 		builder.Services.AddTransient<PlayerPage>();
 		builder.Services.AddTransient<TeamPage>();
 		builder.Services.AddTransient<PlayerViewModel>();
@@ -32,6 +32,10 @@ public static class MauiProgram
         builder.Services.AddSingleton<INavigationService, MauiNavigationService>();
 		builder.Services.AddSingleton<IDialogService, MauiDialogServices>();
 		builder.Services.AddSingleton<ILocalStorageService, LocalStorageService>();
+		builder.Services.AddSingleton<IPlayerRepository, PlayerDbRepo>();
+
+		var connection = new SQLiteAsyncConnection(Path.Combine(FileSystem.Current.AppDataDirectory, "devils.db3"));
+		builder.Services.AddSingleton<SQLiteAsyncConnection>(connection);
 
 #if DEBUG
 		builder.Logging.AddDebug();

@@ -16,23 +16,28 @@ namespace Red_Devils_App.VieuwModels
     {
         [ObservableProperty]
         private ObservableCollection<Player> players;
-        private readonly IPlayerRepo repo;
+        private readonly IPlayerRepository repo;
         private readonly INavigationService navigation;
         private readonly IDialogService dialog;
 
 
-        public TeamViewModel(IPlayerRepo repo, INavigationService navigation)
+        public TeamViewModel(IPlayerRepository repo, INavigationService navigation)
         {
             this.repo = repo;
-            this.navigation = navigation;
+            this.navigation = navigation;           
+        }
 
-            players = new ObservableCollection<Player>(repo.GetPlayers());
+        [RelayCommand]
+        private async Task OnLoadView()
+        {
+            players = new ObservableCollection<Player>(await repo.GetAllPlayerAsync());
         }
 
         [RelayCommand]
         private async Task OnDeletePlayer(Player player)
         {
             //TODO: delete from repository
+            await repo.DeletePlayerAsync(player.Id);
             players.Remove(player);
         }
 

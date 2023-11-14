@@ -1,4 +1,6 @@
-﻿using Red_Devils_App.Models;
+﻿using Red_Devils_App.Entities;
+using Red_Devils_App.Models;
+using SQLite;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,74 +15,80 @@ namespace Red_Devils_App.Repository
         List<Player> GetPlayers();
         Task UpdatePlayer(Player player);
     }
-    public class PlayerDBRepo : IPlayerRepo
+    public class PlayerDbRepo : IPlayerRepository
     {
-        public async Task UpdatePlayer(Player player)
+        private readonly SQLiteAsyncConnection connection;
+        private bool initComplete = false;
+        public PlayerDbRepo(SQLiteAsyncConnection connection) 
         {
-            await Task.Delay(1);
+            this.connection = connection;
         }
-        public PlayerDBRepo(string connectionString)
+        private async Task Init()
         {
-            //context.connectionString = connectionString
-        }
-        public List<Player> GetPlayers()
-        {
-            var players = new List<Player>
+            if (!initComplete)
             {
-            new Player
-            {
-                Id = 5257,
-                Name = "Toby Alderweireld",
-                Number = 2,
-                BirthDate = new DateTime(1989,3,2)
-            },
-            new Player
-            {
-                Id = 5581,
-                Name = "Yannick Carrasco",
-                Number = 11,
-                BirthDate = new DateTime(1993,9,4)
-            },
-            new Player
-            {
-                Id = 5771,
-                Name = "Thibaut Courtois",
-                Number = 1,
-                BirthDate = new DateTime(1992,5,11)
-            },
-            new Player
-            {
-                Id = 5590,
-                Name = "Romelu Lukaku",
-                Number = 9,
-                BirthDate = new DateTime(1993,5,13)
-            },
-            new Player
-            {
-                Id = 5110,
-                Name = "Jan Vertonghen",
-                Number = 5,
-                BirthDate = new DateTime(1987,4,24)
-            },
-            new Player
-            {
-                Id = 5733,
-                Name = "Kevin De Bruyne",
-                Number = 7,
-                BirthDate = new DateTime(1991,6,28)
-            },
-            new Player
-            {
-                Id = 6135,
-                Name = "Youri Tielemans",
-                Number = 8,
-                BirthDate= new DateTime(1997,5,7)
+                await connection.CreateTableAsync<Player>();
+                initComplete = true;
             }
-        };
-            return players;
+        }
+        public async Task<List<Player>> GetAllPlayerAsync()
+        {
+            await Init();
+            return await connection.Table<Player>().ToListAsync();
+        }
+        public async Task<Player> GetPlayerAsync(int id)
+        {
+            await Init();
+            return await connection.GetAsync<Player>(id);
+        }
+
+        public async Task<int> SavePlayerAsync(Player player)
+        {
+            await Init();
+            if (player.Id != 0)
+            {
+                return await connection.UpdateAsync(player);                
+            }
+            else
+            {
+                return await connection.InsertAsync(player);
+            }
+        }
+        public async Task<int> DeletePlayerAsync(int id)
+        {
+            await Init();
+            return await connection.DeleteAsync(id);
+        }
+        public async Task<int> AddPlayerAsync(Player player)
+        {
+            await Init();
+            return await connection.InsertAsync(player);
+        }
+        public async Task<int> UpdatePlayerAsync(Player player)
+        {
+            await Init();
+            return await connection.UpdateAsync(player);
         }
     }
-    public class PlayerFakeRepo : IPlayerRepo
+        //public List<Player> GetPlayers()
+        //{
+        //    var data = connection.Table<PlayerData>().ToList();
+        //    var result = new List<Player>();
+
+        //    foreach (var item in data)
+        //    {
+        //        var player = new Player()
+        //        {
+        //            Id = item.Id,
+        //            Name = item.Name,
+        //            Number = item.Number,
+        //            BirthDate = item.BirthDate,
+        //        };
+        //        result.Add(player);
+        //    }
+        //    return result;
+        //}
+    public class PlayerFakeRepo : IPlayerRepository
     {
         public async Task UpdatePlayer(Player player)
         {
@@ -90,8 +98,9 @@ namespace Red_Devils_App.Repository
         {
             //context.connectionString = connectionString
         }
-        public List<Player> GetPlayers()
+        public async Task<List<Player>> GetAllPlayerAsync()
         {
+            await Task.Delay(1);
             var players = new List<Player>
             {
             new Player
@@ -146,17 +155,60 @@ namespace Red_Devils_App.Repository
         };
             return players;
         }
-    }
-    public class PlayerAPIRepo : IPlayerRepo
-    {
-        public async Task UpdatePlayer(Player player)
+
+        public Task<int> AddPlayerAsync(Player player)
         {
-            await Task.Delay(1);
+            throw new NotImplementedException();
         }
+
+        public Task<int> DeletePlayerAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Player> GetPlayerAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<int> UpdatePlayerAsync(Player player)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<int> SavePlayerAsync(Player player)
+        {
+            throw new NotImplementedException();
+        }
+    }
+    public class PlayerAPIRepo : IPlayerRepository
+    {
+        
         public PlayerAPIRepo(HttpClient client)
         {
             //context.connectionString = connectionString
         }
+
+        public Task<int> AddPlayerAsync(Player player)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<int> DeletePlayerAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<Player>> GetAllPlayerAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Player> GetPlayerAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public List<Player> GetPlayers()
         {
             //TODO get players from database
@@ -213,6 +265,16 @@ namespace Red_Devils_App.Repository
             }
         };
             return players;
+        }
+
+        public Task<int> SavePlayerAsync(Player player)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<int> UpdatePlayerAsync(Player player)
+        {
+            throw new NotImplementedException();
         }
     }
 }

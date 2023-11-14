@@ -14,6 +14,7 @@ namespace Red_Devils_App.VieuwModels
         private readonly INavigationService navigation;
         private readonly IDialogService dialog;
         private readonly ILocalStorageService storage;
+
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(LoginCommand))]
         private string userName = string.Empty;
@@ -22,7 +23,7 @@ namespace Red_Devils_App.VieuwModels
         private string password = string.Empty;
         [ObservableProperty]
         private bool rememberLogin;
-
+        
         public LoginViewModel(INavigationService navigation, IDialogService dialog, ILocalStorageService storage)
         {
             this.navigation = navigation;
